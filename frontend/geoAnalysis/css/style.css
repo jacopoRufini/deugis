@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgb(22, 22, 22);
+  color: white;
+}
+
+.sidebar {
+
+}

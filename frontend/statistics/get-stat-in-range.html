@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>Get Stat In Range</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="utils.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+<div style="width:100%;">
+    <canvas id="canvas"></canvas>
+</div>
+
+<script>
+    const colorArray = [
+        '#FF6633', '#99E0FF', '#FF33FF', '#FFFF99', '#00B3E6',
+        '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+        '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+        '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+        '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+        '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+        '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+        '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+        '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+    const config = {
+        type: 'line',
+        data: {
+            labels: null,
+            datasets: null
+        },
+        options: {
+            maintainAspectRatio: true,
+            spanGaps: false,
+            title: {
+                text: 'GIS Boundary chart',
+                display: true
+            },
+            elements: {
+                line: {
+                    tension: 0.000001
+                }
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        lineHeight: "100%"
+                    }
+                }]
+            }
+        }
+    };
+
+    function showChart() {
+        const json = JSON.parse(document.getElementById("jsonValue").value);
+        const key = Object.keys(json)[0];
+        const datasets = json[key];
+        config.data.labels = Object.keys(datasets);
+        config.data.datasets = [{
+            backgroundColor: colorArray[0],
+            borderColor: colorArray[0],
+            data: buildData(datasets),
+            label: key,
+            fill: 'start'
+
+        }];
+        const ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    }
+
+    function buildData(obj) {
+        const data = [];
+        for (let key in obj) {
+            data.push(obj[key])
+        }
+        return data
+    }
+
+</script>
+<textarea id="jsonValue" rows="10" cols="100" placeholder="PASTE HERE JSON DATA"></textarea><br><br>
+<button type="button" class="btn btn-success" onclick="showChart()">AVVIA</button>
+</body>
+
+</html>

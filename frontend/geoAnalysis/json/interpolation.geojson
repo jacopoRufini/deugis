@@ -1,0 +1,12 @@
+{
+  "type": "FeatureCollection",
+  "crs": { "year": "2012", "properties": { "name": "Number of days particulate matter PM10 concentrations exceed 50 µg/m³" } },
+  "features": [
+    { "type": "Feature", "properties": { "id": "Milano", "value": 107.00}, "geometry": { "type": "Point", "coordinates": [9.1905000, 45.4668000] } },
+    { "type": "Feature", "properties": { "id": "Torino", "value": 94.00}, "geometry": { "type": "Point", "coordinates": [7.6824892, 45.0677551] } },
+    { "type": "Feature", "properties": { "id": "Asti", "value": 58.00}, "geometry": { "type": "Point", "coordinates": [8.2068876, 44.9005420] } },
+    { "type": "Feature", "properties": { "id": "Pavia", "value": 58.00}, "geometry": { "type": "Point", "coordinates": [9.1546375, 45.1860043] } },
+    { "type": "Feature", "properties": { "id": "Novara", "value": 69.00}, "geometry": { "type": "Point", "coordinates": [8.6196550, 45.4464036] } }
+  ],
+  "expected" : { "type": "Feature", "properties": { "id": "Novara", "value": 80.21}, "geometry": { "type": "Point", "coordinates": [8.6196550, 45.4464036] } }
+}

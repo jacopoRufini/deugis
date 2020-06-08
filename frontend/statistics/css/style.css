@@ -1,0 +1,17 @@
+body {
+    color: white;
+}
+
+.sidebar {
+    background: #007bff;
+    background: linear-gradient(to top, #8da6d6, #5b80b6);
+
+    /*
+        background: linear-gradient(to top, #30cfd0, #090c67);
+
+    background: linear-gradient(to right, #004791, #2677b0);
+        background: linear-gradient(to top, #6a85b6, #828a9e);
+
+     */
+}
+

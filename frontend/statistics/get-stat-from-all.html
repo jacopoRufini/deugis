@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Get Stat From All</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="utils.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container" style="width: 100%;">
+    <canvas id="canvas"></canvas>
+</div>
+<script>
+    const colorArray = [
+        '#FF6633', '#99E0FF', '#FF33FF', '#FFFF99', '#00B3E6',
+        '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+        '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+        '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+        '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+        '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+        '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+        '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+        '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+    const verticalConfig = {
+        type: 'bar',
+        data: {
+            labels: null,
+            datasets: null
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top'
+            },
+            title: {
+                display: true,
+                text: 'Vertical Chart GIS stats'
+            }
+        }
+    };
+
+    const horizConfig = {
+        type: 'horizontalBar',
+        data: {
+            labels: null,
+            datasets: null
+        },
+        options: {
+            elements: {
+                rectangle: {
+                    borderWidth: 2
+                }
+            },
+            responsive: true,
+            legend: {
+                display: false,
+                position: 'right'
+            },
+            title: {
+                display: true,
+                text: 'Horizontal Chart GIS stat'
+            }
+        }
+    };
+
+
+    function showChart() {
+        const ctx = document.getElementById('canvas').getContext('2d');
+        const datasets = document.getElementById('jsonValue').value;
+        const json = JSON.parse(datasets);
+        const info = json['_1'];
+        const data = json['_2'];
+        const labels = [info['_1'] + ' ' + info['_2'] + ' ' + info['_3'] + ' in ' + info['_4']];
+        if (Object.keys(data).length > 30) {
+            horizConfig.data.labels = labels;
+            horizConfig.data.datasets = buildDataset(data);
+            window.myLine = new Chart(ctx, horizConfig);
+        } else {
+            verticalConfig.data.labels = labels;
+            verticalConfig.data.datasets = buildDataset(data);
+            window.myLine = new Chart(ctx, verticalConfig);
+        }
+    }
+
+    function buildDataset(obj) {
+        const datasets = [];
+        const keys = Object.keys(obj);
+        for (let key in obj) {
+            const index = keys.indexOf(key) % 50;
+            const dataset = {
+                label: key,
+                backgroundColor: colorArray[index],
+                borderColor: colorArray[index],
+                borderWidth: 1,
+                data: [obj[key]]
+            };
+            datasets.push(dataset)
+        }
+        return datasets
+    }
+
+</script>
+    <textarea id="jsonValue" rows="10" cols="100" placeholder="PASTE HERE JSON DATA"></textarea><br><br>
+    <button type="button" class="btn btn-success" onclick="showChart()">AVVIA</button>
+</body>
+
+</html>
